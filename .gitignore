@@ -1,0 +1,8 @@
+venv/
+.env
+*.pyc
+__pycache__/
+database.db
+.vercel
+.next/
+node_modules/
