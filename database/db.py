@@ -21,9 +21,11 @@ if DEBUG == True:
     engine = create_engine(SQLITE, connect_args={'check_same_thread': False})
 if DEBUG == False:
     DATABASE_URL = os.getenv("DATABASE_URL")
-    if DATABASE_URL==None:
-        print("Cannot connect to heroku database check exposed vars of postgres setup")
-    engine = create_engine(DATABASE_URL)
+    if DATABASE_URL:
+        engine = create_engine(DATABASE_URL)
+    else:
+        print("DATABASE_URL not set — falling back to SQLite")
+        engine = create_engine('sqlite:///database/database.db', connect_args={'check_same_thread': False})
 
 
 
