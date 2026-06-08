@@ -36,6 +36,12 @@ if DEBUG==True:
     bot.remove_webhook()
     start_scheduler()
 
+    # Start Flask health check in background thread for Railway
+    import threading
+    port = int(os.environ.get('PORT', 5000))
+    t = threading.Thread(target=server.run, kwargs={'host': '0.0.0.0', 'port': port}, daemon=True)
+    t.start()
+
     while True:
         try:
             bot.polling()
