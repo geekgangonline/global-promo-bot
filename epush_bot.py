@@ -37,10 +37,11 @@ if DEBUG==True:
     start_scheduler()
 
     # Start Flask health check in background thread for Railway
-    import threading
+    import threading, time
     port = int(os.environ.get('PORT', 5000))
-    t = threading.Thread(target=server.run, kwargs={'host': '0.0.0.0', 'port': port}, daemon=True)
+    t = threading.Thread(target=server.run, kwargs={'host': '0.0.0.0', 'port': port, 'debug': False, 'use_reloader': False}, daemon=True)
     t.start()
+    time.sleep(2)  # Let Flask start before polling
 
     while True:
         try:
